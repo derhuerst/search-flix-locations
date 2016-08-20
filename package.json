@@ -1,0 +1,14 @@
+{
+	"name":         "search-meinfernbus-locations",
+	"description":  "Search for Flixbus MeinFernbus cities & stations.",
+	"version":      "0.1.0",
+	"main":         "index.js",
+	"files":        ["index.js"],
+	"keywords":     ["flixbus", "meinfernbus", "fernbus", "bus", "stations"],
+	"author":       "Jannis R <mail@jannisr.de>",
+	"homepage":     "https://github.com/derhuerst/search-meinfernbus-locations",
+	"repository":   "derhuerst/search-meinfernbus-locations",
+	"bugs":         "https://github.com/derhuerst/search-meinfernbus-locations/issues",
+	"license":      "ISC",
+	"engines":      {"node": ">=6"}
+}
