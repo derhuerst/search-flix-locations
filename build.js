@@ -4,14 +4,12 @@ const so = require('so')
 const api = require('meinfernbus')
 const uniq = require('lodash.uniq')
 const pick = require('lodash.pick')
-const normalize = require('normalize-for-search')
 const fs = require('fs')
 const path = require('path')
 
+const tokenize = require('./tokenize')
 
 
-// todo: see derhuerst/vbb-tokenize-station
-const tokenize = (name) => normalize(name).replace(/-/g, ' ').split(' ')
 
 const tokens = (names) =>
 	uniq(names.reduce((all, name) => all.concat(tokenize(name)), []))
