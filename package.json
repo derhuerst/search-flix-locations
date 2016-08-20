@@ -10,5 +10,16 @@
 	"repository":   "derhuerst/search-meinfernbus-locations",
 	"bugs":         "https://github.com/derhuerst/search-meinfernbus-locations/issues",
 	"license":      "ISC",
-	"engines":      {"node": ">=6"}
+	"engines":      {"node": ">=6"},
+	"devDependencies": {
+		"so": "^1.0.1",
+		"meinfernbus": "^0.1.2",
+		"lodash.uniq": "^4.5",
+		"lodash.pick": "^4.4",
+		"normalize-for-search": "^2.0.1"
+	},
+	"scripts": {
+		"build": "node build.js",
+		"prepublish": "npm run build"
+	}
 }
