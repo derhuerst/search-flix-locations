@@ -33,8 +33,6 @@ so(function* () {
 		.map((city) => ({
 			type: 'city',
 			id: city.id, name: city.name,
-			latitude: city.coordinates.latitude,
-			longitude: city.coordinates.longitude,
 			tokens: computeTokens(city).length
 		}))
 	console.info(cities.length + ' cities')
@@ -45,8 +43,6 @@ so(function* () {
 			{
 				type: 'station',
 				country: station.country.code,
-				latitude: station.coordinates.latitude,
-				longitude: station.coordinates.longitude,
 				tokens: computeTokens(station).length
 			}))
 	console.info(stations.length + ' stations')
