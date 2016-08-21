@@ -18,8 +18,7 @@
 		"so": "^1.0.1",
 		"meinfernbus": "^0.1.2",
 		"lodash.uniq": "^4.5",
-		"lodash.pick": "^4.4",
-		"normalize-for-search": "^2.0.1"
+		"lodash.pick": "^4.4"
 	},
 	"scripts": {
 		"build": "node build.js",
