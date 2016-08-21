@@ -1,7 +1,5 @@
 'use strict'
 
-const hifo = require('hifo')
-
 const tokenize = require('./tokenize')
 
 const byId = require('./by-id.json')
@@ -26,27 +24,53 @@ const findTokensForFragment = (fragment) => {
 	return results
 }
 
-const enrichTokenWithStations = (token) => {
-	token.stations = []
-	for (let id of byToken[token.name])
-		token.stations.push(byId[id])
-	return token
-}
-
 const enrichFragmentWithTokens = (fragment) => ({
 	name: fragment,
-	tokens: findTokensForFragment(fragment).map(enrichTokenWithStations)
+	tokens: findTokensForFragment(fragment)
 })
 
 
 
-const autocomplete = (query, limit) => {
-	if (query.trim() === '') return []
-	const results = hifo(hifo.highest('relevance'), limit || 5)
-
-	const fragments = tokenize(query).map(enrichFragmentWithTokens)
-
-	return fragments
+const enrichFragmentWithStations = (fragment, i, fragments) => {
+	fragment.stations = []
+	for (let token of fragment.tokens) {
+		for (let id of byToken[token.name]) {
+			const station = Object.create(byId[id])
+			station.relevance = token.relevance
+				+ fragments.length / station.tokens
+			fragment.stations.push(station)
+		}
+	}
+	return fragment
 }
+
+const findStationsFromFragments = (results, fragment, i, fragments) => {
+	for (let station1 of fragment.stations) {
+		const match = fragments.every((fragment) =>
+			fragment.stations.find((station2) => station2.id === station1.id))
+		if (match) results.push(station1)
+	}
+	return results
+}
+
+const addUpRelevance = (results, station1, i, stations) => {
+	const previous = results.find((station2) => station2.id === station1.id)
+	if (previous) previous.relevance += station1.relevance
+	else results.push(station1)
+	return results
+}
+
+const sortByRelevance = (a, b) => b.relevance - a.relevance
+
+
+
+const autocomplete = (query, limit) =>
+	tokenize(query)
+	.map(enrichFragmentWithTokens)
+	.map(enrichFragmentWithStations)
+	.reduce(findStationsFromFragments, [])
+	.reduce(addUpRelevance, [])
+	.sort(sortByRelevance)
+	.slice(0, limit)
 
 module.exports = autocomplete

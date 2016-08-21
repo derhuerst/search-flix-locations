@@ -11,8 +11,9 @@ const tokenize = require('./tokenize')
 
 
 
-const computeTokens = (names) =>
-	uniq(names.reduce((all, name) => all.concat(tokenize(name)), []))
+const computeTokens = (location) =>
+	uniq((location.aliases || []).concat(location.name)
+		.reduce((all, name) => all.concat(tokenize(name)), []))
 
 const prefix = (location) =>
 	(location.type === 'city' ? 'c' : 's') + location.id
@@ -33,7 +34,8 @@ so(function* () {
 			type: 'city',
 			id: city.id, name: city.name,
 			latitude: city.coordinates.latitude,
-			longitude: city.coordinates.longitude
+			longitude: city.coordinates.longitude,
+			tokens: computeTokens(city).length
 		}))
 	console.info(cities.length + ' cities')
 
@@ -44,7 +46,8 @@ so(function* () {
 				type: 'station',
 				country: station.country.code,
 				latitude: station.coordinates.latitude,
-				longitude: station.coordinates.longitude
+				longitude: station.coordinates.longitude,
+				tokens: computeTokens(station).length
 			}))
 	console.info(stations.length + ' stations')
 
@@ -59,7 +62,7 @@ so(function* () {
 	const byToken = cities.concat(stations)
 		.reduce((bar, l) => {
 			const id = prefix(l)
-			const tokens = computeTokens((l.aliases || []).concat(l.name))
+			const tokens = computeTokens(l)
 			for (let token of tokens) {
 				if (!(token in bar)) bar[token] = []
 				bar[token].push(id)
