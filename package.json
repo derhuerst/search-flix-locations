@@ -11,6 +11,9 @@
 	"bugs":         "https://github.com/derhuerst/search-meinfernbus-locations/issues",
 	"license":      "ISC",
 	"engines":      {"node": ">=6"},
+	"dependencies": {
+		"hifo": "^0.6.1"
+	},
 	"devDependencies": {
 		"so": "^1.0.1",
 		"meinfernbus": "^0.1.2",
