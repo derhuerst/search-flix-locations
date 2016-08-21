@@ -11,8 +11,18 @@ const tokenize = require('./tokenize')
 
 
 
-const tokens = (names) =>
+const computeTokens = (names) =>
 	uniq(names.reduce((all, name) => all.concat(tokenize(name)), []))
+
+const prefix = (location) =>
+	(location.type === 'city' ? 'c' : 's') + location.id
+
+const write = (name, data) => new Promise((yay, nay) =>
+	fs.writeFile(
+		path.join(__dirname, name),
+		JSON.stringify(data),
+		(err) => {if (err) nay(err); else yay()}
+	))
 
 so(function* () {
 
@@ -23,8 +33,7 @@ so(function* () {
 			type: 'city',
 			id: city.id, name: city.name,
 			latitude: city.coordinates.latitude,
-			longitude: city.coordinates.longitude,
-			tokens: tokens((city.aliases || []).concat(city.name))
+			longitude: city.coordinates.longitude
 		}))
 	console.info(cities.length + ' cities')
 
@@ -35,25 +44,33 @@ so(function* () {
 				type: 'station',
 				country: station.country.code,
 				latitude: station.coordinates.latitude,
-				longitude: station.coordinates.longitude,
-				tokens: tokens((station.aliases || []).concat(station.name))
+				longitude: station.coordinates.longitude
 			}))
 	console.info(stations.length + ' stations')
 
-	const data = cities.concat(stations)
-		.reduce((byToken = {}, location) => {
-			for (let token of location.tokens) {
-				if (!(token in byToken)) byToken[token] = []
-				byToken[token].push(location)
-			}
-			return byToken
-		})
 
-	yield new Promise((yay, nay) => fs.writeFile(
-		path.join(__dirname, 'data.json'),
-		JSON.stringify(data),
-		(err) => {if (err) nay(err); else yay()}
-	))
+
+	const byId = cities.concat(stations)
+		.reduce((foo, l) => {
+			foo[prefix(l)] = l
+			return foo
+		}, {})
+
+	const byToken = cities.concat(stations)
+		.reduce((bar, l) => {
+			const id = prefix(l)
+			const tokens = computeTokens((l.aliases || []).concat(l.name))
+			for (let token of tokens) {
+				if (!(token in bar)) bar[token] = []
+				bar[token].push(id)
+			}
+			return bar
+		}, {})
+
+
+
+	yield write('by-id.json', byId)
+	yield write('by-token.json', byToken)
 
 
 
