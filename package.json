@@ -16,7 +16,7 @@
 	},
 	"devDependencies": {
 		"so": "^1.0.1",
-		"meinfernbus": "^0.1.2",
+		"meinfernbus": "^0.2.0",
 		"lodash.uniq": "^4.5",
 		"lodash.pick": "^4.4",
 		"tape": "^4.6",
