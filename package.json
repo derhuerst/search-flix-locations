@@ -12,7 +12,7 @@
 	"license":      "ISC",
 	"engines":      {"node": ">=4"},
 	"dependencies": {
-		"normalize-for-search": "^2.0.1"
+		"slug": "^0.9.1"
 	},
 	"devDependencies": {
 		"so": "^1.0.1",
