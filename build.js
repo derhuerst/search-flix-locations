@@ -11,19 +11,24 @@ const tokenize = require('./tokenize')
 
 
 
-const computeTokens = (location) =>
-	uniq((location.aliases || []).concat(location.name)
-		.reduce((all, name) => all.concat(tokenize(name)), []))
+const computeTokens = (location) => {
+	const tokens = (location.aliases || [])
+	.concat(location.name)
+	.reduce((all, name) => all.concat(tokenize(name)), [])
+	return uniq(tokens)
+}
 
 const prefix = (location) =>
 	(location.type === 'city' ? 'c' : 's') + location.id
 
-const write = (name, data) => new Promise((yay, nay) =>
-	fs.writeFile(
-		path.join(__dirname, name),
-		JSON.stringify(data),
-		(err) => {if (err) nay(err); else yay()}
-	))
+const write = (name, data) =>
+	new Promise((yay, nay) => {
+		const dest = path.join(__dirname, name)
+		fs.writeFile(dest, JSON.stringify(data), (err) => {
+			if (err) nay(err)
+			else yay()
+		})
+	})
 
 so(function* () {
 

@@ -9,6 +9,7 @@
 [![dependency status](https://img.shields.io/david/derhuerst/search-meinfernbus-locations.svg)](https://david-dm.org/derhuerst/search-meinfernbus-locations)
 [![dev dependency status](https://img.shields.io/david/dev/derhuerst/search-meinfernbus-locations.svg)](https://david-dm.org/derhuerst/search-meinfernbus-locations#info=devDependencies)
 ![ISC-licensed](https://img.shields.io/github/license/derhuerst/search-meinfernbus-locations.svg)
+[![chat on gitter](https://badges.gitter.im/derhuerst.svg)](https://gitter.im/derhuerst)
 
 
 ## Installing

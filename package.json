@@ -20,7 +20,7 @@
 		"lodash.uniq": "^4.5",
 		"lodash.pick": "^4.4",
 		"tape": "^4.6",
-		"tap-min": "^1.1"
+		"tap-min": "^1.2.1"
 	},
 	"scripts": {
 		"build": "node build.js",
