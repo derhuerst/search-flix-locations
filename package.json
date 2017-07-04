@@ -21,7 +21,8 @@
 		"so": "^1.0.1",
 		"meinfernbus": "^1.0.0",
 		"tape": "^4.6",
-		"tap-min": "^1.2.1"
+		"tap-min": "^1.2.1",
+		"is-roughly-equal": "^0.1.0"
 	},
 	"scripts": {
 		"build": "node build.js",
