@@ -35,7 +35,7 @@ const enrichFragmentWithStations = (fragment, i, fragments) => {
 	fragment.stations = []
 	for (let token of fragment.tokens) {
 		for (let id of byToken[token.name]) {
-			const station = Object.create(byId[id])
+			const station = Object.assign({}, byId[id])
 			station.relevance = token.relevance
 				+ fragments.length / station.tokens
 			fragment.stations.push(station)
