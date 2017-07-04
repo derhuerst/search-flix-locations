@@ -2,8 +2,6 @@
 
 const so = require('so')
 const api = require('meinfernbus')
-const uniq = require('lodash.uniq')
-const pick = require('lodash.pick')
 const fs = require('fs')
 const path = require('path')
 
@@ -26,12 +24,29 @@ const write = (name, data) =>
 		})
 	})
 
+const read = (name) => new Promise((yay, nay) => {
+	const src = path.join(__dirname, name)
+	fs.readFile(src, {encoding: 'utf8'}, (err, data) => {
+		if (err) return nay(err)
+		try {
+			yay(JSON.parse(data))
+		} catch (err) {
+			nay(err)
+		}
+	})
+})
+
 so(function* () {
-	const rawCities = yield api.locations.cities()
-	const rawStations = yield api.locations.stations()
+	// const rawCities = yield api.locations.cities()
+	// yield write('raw-cities.json', rawCities)
+	const rawCities = yield read('raw-cities.json')
+	// const rawStations = yield api.locations.stations()
+	// yield write('raw-stations.json', rawStations)
+	const rawStations = yield read('raw-stations.json')
+	// return
 
 	console.info('Building a search index.')
-	const byPrefix = {}
+	const locations = {} // by prefixed ID
 	const byToken = {}
 
 	for (let c of rawCities) {
@@ -42,7 +57,7 @@ so(function* () {
 			console.error(`city ${c.id} has aliases, which are not supported`)
 		}
 
-		byPrefix[key] = [CITY, c.id, c.name, tokens.length, c.stations]
+		locations[key] = [CITY, c.id, c.name, tokens.length, c.stations]
 		for (let token of tokens) {
 			if (!byToken[token]) byToken[token] = []
 			byToken[token].push(key)
@@ -57,12 +72,38 @@ so(function* () {
 			console.error(`station ${c.id} has aliases, which are not supported`)
 		}
 
-		byPrefix[key] = [STATION, s.id, s.name, tokens.length, s.city]
+		locations[key] = [STATION, s.id, s.name, tokens.length, s.city]
 		for (let token of tokens) {
 			if (!byToken[token]) byToken[token] = []
 			byToken[token].push(key)
 		}
 	}
+
+	console.info('Computing token scores.')
+	const scores = {}
+	const nrOfAllLocations = Object.keys(locations).length
+
+	for (let token in byToken) {
+		const nrOfLocations = byToken[token].length
+		scores[token] = nrOfLocations / nrOfAllLocations
+	}
+
+	let max = 0
+	for (let token in scores) {
+		max = Math.max(scores[token], max)
+	}
+
+	for (let token in scores) {
+		let score = (max - scores[token]) / max // revert, clamp to [0, 1]
+		score = Math.pow(score, 5) // stretch distribution
+		scores[token] = parseFloat(score.toFixed(5))
+	}
+
+	console.info('Writing index to file.')
+
+	write('locations.json', locations)
+	write('tokens.json', byToken)
+	write('scores.json', scores)
 
 })()
 .catch((err) => {
