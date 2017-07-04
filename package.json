@@ -3,7 +3,11 @@
 	"description":  "Search for Flixbus MeinFernbus cities & stations.",
 	"version":      "1.0.0",
 	"main":         "index.js",
-	"files":        ["index.js", "tokenize.js", "by-id.json", "by-token.json"],
+	"files":        [
+		"index.js",
+		"tokenize.js",
+		"data"
+	],
 	"keywords":     ["flixbus", "meinfernbus", "fernbus", "bus", "stations"],
 	"author":       "Jannis R <mail@jannisr.de>",
 	"homepage":     "https://github.com/derhuerst/search-meinfernbus-locations",

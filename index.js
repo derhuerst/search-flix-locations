@@ -6,9 +6,9 @@ const leven = require('leven')
 
 const tokenize = require('./tokenize')
 
-let rawLocations = require('./locations.json')
-const byToken = require('./tokens.json')
-const scores = require('./scores.json')
+let rawLocations = require('./data/locations.json')
+const byToken = require('./data/tokens.json')
+const scores = require('./data/scores.json')
 
 const locations = {}
 for (let key in rawLocations) {

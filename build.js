@@ -112,9 +112,9 @@ so(function* () {
 
 	console.info('Writing index to file.')
 
-	write('locations.json', locations)
-	write('tokens.json', byToken)
-	write('scores.json', scores)
+	write('data/locations.json', locations)
+	write('data/tokens.json', byToken)
+	write('data/scores.json', scores)
 
 })()
 .catch((err) => {
