@@ -9,17 +9,13 @@ const path = require('path')
 
 const tokenize = require('./tokenize')
 
+// to get smaller JSONs
+const CITY = 0
+const STATION = 1
 
-
-const computeTokens = (location) => {
-	const tokens = (location.aliases || [])
-	.concat(location.name)
-	.reduce((all, name) => all.concat(tokenize(name)), [])
-	return uniq(tokens)
+const prefix = (location) => {
+	return (location.type === 'city' ? 'c' : 's') + location.id
 }
-
-const prefix = (location) =>
-	(location.type === 'city' ? 'c' : 's') + location.id
 
 const write = (name, data) =>
 	new Promise((yay, nay) => {
@@ -31,52 +27,42 @@ const write = (name, data) =>
 	})
 
 so(function* () {
+	const rawCities = yield api.locations.cities()
+	const rawStations = yield api.locations.stations()
 
+	console.info('Building a search index.')
+	const byPrefix = {}
+	const byToken = {}
 
+	for (let c of rawCities) {
+		const key = prefix(c)
+		const tokens = tokenize(c.name)
+		// todo: s.aliases
+		if (c.aliases && c.aliases.length > 0) {
+			console.error(`city ${c.id} has aliases, which are not supported`)
+		}
 
-	const cities = (yield api.locations.cities())
-		.map((city) => ({
-			type: 'city',
-			id: city.id, name: city.name,
-			tokens: computeTokens(city).length
-		}))
-	console.info(cities.length + ' cities')
+		byPrefix[key] = [CITY, c.id, c.name, tokens.length, c.stations]
+		for (let token of tokens) {
+			if (!byToken[token]) byToken[token] = []
+			byToken[token].push(key)
+		}
+	}
 
-	const stations = (yield api.locations.stations())
-		.map((station) => Object.assign(
-			pick(station, ['id', 'name', 'street', 'zip', 'city']),
-			{
-				type: 'station',
-				country: station.country.code,
-				tokens: computeTokens(station).length
-			}))
-	console.info(stations.length + ' stations')
+	for (let s of rawStations) {
+		const key = prefix(s)
+		const tokens = tokenize(s.name)
+		// todo: s.aliases
+		if (s.aliases && s.aliases.length > 0) {
+			console.error(`station ${c.id} has aliases, which are not supported`)
+		}
 
-
-
-	const byId = cities.concat(stations)
-		.reduce((foo, l) => {
-			foo[prefix(l)] = l
-			return foo
-		}, {})
-
-	const byToken = cities.concat(stations)
-		.reduce((bar, l) => {
-			const id = prefix(l)
-			const tokens = computeTokens(l)
-			for (let token of tokens) {
-				if (!(token in bar)) bar[token] = []
-				bar[token].push(id)
-			}
-			return bar
-		}, {})
-
-
-
-	yield write('by-id.json', byId)
-	yield write('by-token.json', byToken)
-
-
+		byPrefix[key] = [STATION, s.id, s.name, tokens.length, s.city]
+		for (let token of tokens) {
+			if (!byToken[token]) byToken[token] = []
+			byToken[token].push(key)
+		}
+	}
 
 })()
 .catch((err) => {
