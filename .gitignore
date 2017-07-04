@@ -5,6 +5,4 @@ Thumbs.db
 node_modules
 npm-debug.log
 
-locations.json
-tokens.json
-scores.json
+data
