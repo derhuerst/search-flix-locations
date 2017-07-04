@@ -11,10 +11,6 @@ const tokenize = require('./tokenize')
 const CITY = 0
 const STATION = 1
 
-const prefix = (location) => {
-	return (location.type === 'city' ? 'c' : 's') + location.id
-}
-
 const write = (name, data) =>
 	new Promise((yay, nay) => {
 		const dest = path.join(__dirname, name)
@@ -50,14 +46,16 @@ so(function* () {
 	const byToken = {}
 
 	for (let c of rawCities) {
-		const key = prefix(c)
+		const key = 'c' + c.id
 		const tokens = tokenize(c.name)
 		// todo: s.aliases
 		if (c.aliases && c.aliases.length > 0) {
 			console.error(`city ${c.id} has aliases, which are not supported`)
 		}
 
-		locations[key] = [CITY, c.id, c.name, tokens.length, c.stations]
+		locations[key] = [
+			CITY, c.id, c.name, tokens.length, c.stations, 0 // importance acc
+		]
 		for (let token of tokens) {
 			if (!byToken[token]) byToken[token] = []
 			byToken[token].push(key)
@@ -65,18 +63,31 @@ so(function* () {
 	}
 
 	for (let s of rawStations) {
-		const key = prefix(s)
+		const key = 's' + s.id
 		const tokens = tokenize(s.name)
 		// todo: s.aliases
 		if (s.aliases && s.aliases.length > 0) {
 			console.error(`station ${c.id} has aliases, which are not supported`)
 		}
 
-		locations[key] = [STATION, s.id, s.name, tokens.length, s.city]
+		locations[key] = [
+			STATION, s.id, s.name, tokens.length, s.city, s.importance || 1
+		]
 		for (let token of tokens) {
 			if (!byToken[token]) byToken[token] = []
 			byToken[token].push(key)
 		}
+	}
+
+	console.info('Computing city weights.')
+
+	for (let s of rawStations) {
+		const city = locations['c' + s.city]
+		if (!city) {
+			console.error(`station ${s.id} has an invalid city ${s.city}`)
+			continue
+		}
+		city[5] += Math.max(s.importance, 3)
 	}
 
 	console.info('Computing token scores.')
