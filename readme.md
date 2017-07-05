@@ -1,6 +1,6 @@
 # *search-meinfernbus-locations*
 
-**Search for [Flixbus](https://flixbus.de/) cities & stations.**
+**Search for [Flixbus](https://flixbus.de/) (Meinfernbus) cities & stations.**
 
 [![asciicast](https://asciinema.org/a/83504.png)](https://asciinema.org/a/83504)
 

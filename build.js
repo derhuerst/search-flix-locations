@@ -33,13 +33,8 @@ const read = (name) => new Promise((yay, nay) => {
 })
 
 so(function* () {
-	// const rawCities = yield api.locations.cities()
-	// yield write('raw-cities.json', rawCities)
-	const rawCities = yield read('raw-cities.json')
-	// const rawStations = yield api.locations.stations()
-	// yield write('raw-stations.json', rawStations)
-	const rawStations = yield read('raw-stations.json')
-	// return
+	const rawCities = yield api.locations.cities()
+	const rawStations = yield api.locations.stations()
 
 	console.info('Building a search index.')
 	const locations = {} // by prefixed ID
