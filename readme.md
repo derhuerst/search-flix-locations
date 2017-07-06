@@ -22,6 +22,10 @@ npm install search-meinfernbus-locations
 ## Usage
 
 ```js
+autocomplete(query, limit = 6, fuzzy = false, completion = true)
+```
+
+```js
 const pick = require('lodash.pick')
 const search = require('search-meinfernbus-locations')
 
@@ -65,6 +69,8 @@ console.log(results)
 	relevance: 1.2506165809277259
 } ]
 ```
+
+If you set `fuzzy` to `true`, words with a [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) `<= 3` will be taken into account. This is a lot slower though.
 
 
 ## Contributing
