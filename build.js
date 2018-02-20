@@ -1,120 +1,84 @@
 'use strict'
 
-const so = require('so')
-const api = require('meinfernbus')
-const fs = require('fs')
 const path = require('path')
+const fs = require('fs')
+const buildIndexes = require('synchronous-autocomplete/build')
+const api = require('meinfernbus')
 
 const tokenize = require('./tokenize')
 
-// to get smaller JSONs
-const REGION = 0
-const STATION = 1
+// todo
+// // to get smaller data files
+// const REGION = 0
+// const STATION = 1
 
-const write = (name, data) =>
-	new Promise((yay, nay) => {
-		const dest = path.join(__dirname, name)
-		fs.writeFile(dest, JSON.stringify(data), (err) => {
-			if (err) nay(err)
-			else yay()
-		})
-	})
-
-const read = (name) => new Promise((yay, nay) => {
-	const src = path.join(__dirname, name)
-	fs.readFile(src, {encoding: 'utf8'}, (err, data) => {
-		if (err) return nay(err)
-		try {
-			yay(JSON.parse(data))
-		} catch (err) {
-			nay(err)
-		}
+// todo: use require('util').promisify
+const writeFile = (file, data) => new Promise((resolve, reject) => {
+	const dest = path.join(__dirname, 'data', file)
+	fs.writeFile(dest, JSON.stringify(data), (err) => {
+		if (err) reject(err)
+		else resolve()
 	})
 })
 
-so(function* () {
-	const rawRegions = yield api.regions()
-	const rawStations = yield api.stations()
+;(async () => {
+	console.info('Fetching data from their API.')
+	const rawRegions = await api.regions()
+	const rawStations = await api.stations()
 
-	console.info('Building a search index.')
-	const locations = {} // by prefixed ID
-	const byToken = {}
+	console.info('Computing a search index.')
+	// todo: store full data, e.g. name, regions
+	// todo: map IDs to get smaller data
+	const items = []
+	const regions = Object.create(null) // by ID
 
 	for (let r of rawRegions) {
-		const key = 'r' + r.id
-		const tokens = tokenize(r.name)
-		// todo: s.aliases
 		if (r.aliases && r.aliases.length > 0) {
+			// todo
 			console.error(`region ${r.id} has aliases, which are not supported`)
 		}
-
-		locations[key] = [
-			REGION, r.id, r.name, tokens.length, r.stations, 0 // importance acc
-		]
-		for (let token of tokens) {
-			if (!byToken[token]) byToken[token] = []
-			byToken[token].push(key)
+		regions[r.id] = {
+			id: 'r' + r.id,
+			name: r.name,
+			weight: 0 // will be accumulated to later
 		}
 	}
 
 	for (let s of rawStations) {
-		const key = 's' + s.id
-		const tokens = tokenize(s.name)
-		// todo: s.aliases
 		if (s.aliases && s.aliases.length > 0) {
+			// todo
 			console.error(`station ${s.id} has aliases, which are not supported`)
 		}
 
-		locations[key] = [
-			STATION, s.id, s.name, tokens.length, s.regions, s.importance || 1
-		]
-		for (let token of tokens) {
-			if (!byToken[token]) byToken[token] = []
-			byToken[token].push(key)
-		}
-	}
-
-	console.info('Computing region weights.')
-
-	for (let s of rawStations) {
-		for(let r of s.regions){
-			const region = locations['r'+r]
+		const weight = s.importance || 1
+		for (let r of s.regions) {
+			const region = regions[r]
 			if (!region) {
-				console.error(`station ${s.id} has an invalid region ${r}`)
+				console.error(`region ${r} of station ${s.id} does not exist.`)
 				continue
 			}
-			region[5] += Math.max(s.importance, 3)
+			region.weight += weight
 		}
+
+		items.push({
+			id: 's' + s.id,
+			name: s.name,
+			weight,
+			regions: s.regions
+		})
 	}
 
-	console.info('Computing token scores.')
-	const scores = {}
-	const nrOfAllLocations = Object.keys(locations).length
+	for (let id in regions) items.push(regions[id])
 
-	for (let token in byToken) {
-		const nrOfLocations = byToken[token].length
-		scores[token] = nrOfLocations / nrOfAllLocations
-	}
+	const {tokens, scores, weights, nrOfTokens} = buildIndexes(tokenize, items)
 
-	let max = 0
-	for (let token in scores) {
-		max = Math.max(scores[token], max)
-	}
-
-	for (let token in scores) {
-		let score = (max - scores[token]) / max // revert, clamp to [0, 1]
-		score = Math.pow(score, 5) // stretch distribution
-		scores[token] = parseFloat(score.toFixed(5))
-	}
-
-	console.info('Writing index to file.')
-
-	write('data/locations.json', locations)
-	write('data/tokens.json', byToken)
-	write('data/scores.json', scores)
-
+	console.info('Writing the index to disk.')
+	await writeFile('tokens.json', tokens)
+	await writeFile('scores.json', scores)
+	await writeFile('weights.json', weights)
+	await writeFile('nr-of-tokens.json', nrOfTokens)
 })()
 .catch((err) => {
-	console.error(err.stack || err.message)
-	process.exit(1)
+	console.error(err)
+	process.exitCode = 1
 })
