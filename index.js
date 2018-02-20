@@ -16,14 +16,14 @@ for (let key in rawLocations) {
 
 	// todo: weight
 	const r = {
-		type: l[0] === 1 ? 'station' : 'city',
+		type: l[0] === 1 ? 'station' : 'region',
 		id: l[1],
 		name: l[2],
 		tokens: l[3],
 		weight: l[5]
 	}
-	if (r.type === 'city') r.stations = l[4]
-	else if (r.type === 'station') r.city = l[4]
+	if (r.type === 'region') r.stations = l[4]
+	else if (r.type === 'station') r.regions = l[4]
 
 	locations[key] = r
 }
