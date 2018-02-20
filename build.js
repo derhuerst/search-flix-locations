@@ -7,10 +7,8 @@ const api = require('meinfernbus')
 
 const tokenize = require('./tokenize')
 
-// todo
-// // to get smaller data files
-// const REGION = 0
-// const STATION = 1
+const REGION = 'region'
+const STATION = 'station'
 
 // todo: use require('util').promisify
 const writeFile = (file, data) => new Promise((resolve, reject) => {
@@ -70,13 +68,14 @@ const writeFile = (file, data) => new Promise((resolve, reject) => {
 
 	for (let id in regions) items.push(regions[id])
 
-	const {tokens, scores, weights, nrOfTokens} = buildIndexes(tokenize, items)
+	const {tokens, scores, weights, nrOfTokens, originalIds} = buildIndexes(tokenize, items)
 
 	console.info('Writing the index to disk.')
 	await writeFile('tokens.json', tokens)
 	await writeFile('scores.json', scores)
 	await writeFile('weights.json', weights)
 	await writeFile('nr-of-tokens.json', nrOfTokens)
+	await writeFile('original-ids.json', originalIds)
 })()
 .catch((err) => {
 	console.error(err)

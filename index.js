@@ -8,8 +8,9 @@ const tokens = require('./data/tokens.json')
 const scores = require('./data/scores.json')
 const weights = require('./data/weights.json')
 const nrOfTokens = require('./data/nr-of-tokens.json')
+const originalIds = require('./data/original-ids.json')
 
-const _autocomplete = create(tokens, scores, weights, nrOfTokens, tokenize)
+const _autocomplete = create(tokens, scores, weights, nrOfTokens, originalIds, tokenize)
 
 const autocomplete = (query, limit = 6, fuzzy = false, completion = true) => {
 	const results = _autocomplete(query, limit, fuzzy, completion)
