@@ -8,7 +8,7 @@ const path = require('path')
 const tokenize = require('./tokenize')
 
 // to get smaller JSONs
-const CITY = 0
+const REGION = 0
 const STATION = 1
 
 const write = (name, data) =>
@@ -33,23 +33,23 @@ const read = (name) => new Promise((yay, nay) => {
 })
 
 so(function* () {
-	const rawCities = yield api.locations.cities()
-	const rawStations = yield api.locations.stations()
+	const rawRegions = yield api.regions()
+	const rawStations = yield api.stations()
 
 	console.info('Building a search index.')
 	const locations = {} // by prefixed ID
 	const byToken = {}
 
-	for (let c of rawCities) {
-		const key = 'c' + c.id
-		const tokens = tokenize(c.name)
+	for (let r of rawRegions) {
+		const key = 'r' + r.id
+		const tokens = tokenize(r.name)
 		// todo: s.aliases
-		if (c.aliases && c.aliases.length > 0) {
-			console.error(`city ${c.id} has aliases, which are not supported`)
+		if (r.aliases && r.aliases.length > 0) {
+			console.error(`region ${r.id} has aliases, which are not supported`)
 		}
 
 		locations[key] = [
-			CITY, c.id, c.name, tokens.length, c.stations, 0 // importance acc
+			REGION, r.id, r.name, tokens.length, r.stations, 0 // importance acc
 		]
 		for (let token of tokens) {
 			if (!byToken[token]) byToken[token] = []
@@ -62,11 +62,11 @@ so(function* () {
 		const tokens = tokenize(s.name)
 		// todo: s.aliases
 		if (s.aliases && s.aliases.length > 0) {
-			console.error(`station ${c.id} has aliases, which are not supported`)
+			console.error(`station ${s.id} has aliases, which are not supported`)
 		}
 
 		locations[key] = [
-			STATION, s.id, s.name, tokens.length, s.city, s.importance || 1
+			STATION, s.id, s.name, tokens.length, s.regions, s.importance || 1
 		]
 		for (let token of tokens) {
 			if (!byToken[token]) byToken[token] = []
@@ -74,15 +74,17 @@ so(function* () {
 		}
 	}
 
-	console.info('Computing city weights.')
+	console.info('Computing region weights.')
 
 	for (let s of rawStations) {
-		const city = locations['c' + s.city]
-		if (!city) {
-			console.error(`station ${s.id} has an invalid city ${s.city}`)
-			continue
+		for(let r of s.regions){
+			const region = locations['r'+r]
+			if (!region) {
+				console.error(`station ${s.id} has an invalid region ${r}`)
+				continue
+			}
+			region[5] += Math.max(s.importance, 3)
 		}
-		city[5] += Math.max(s.importance, 3)
 	}
 
 	console.info('Computing token scores.')

@@ -1,20 +1,31 @@
 {
-	"name":         "search-meinfernbus-locations",
-	"description":  "Search for Flixbus MeinFernbus cities & stations.",
-	"version":      "2.0.0",
-	"main":         "index.js",
-	"files":        [
+	"name": "search-meinfernbus-locations",
+	"description": "Search for Flixbus MeinFernbus cities & stations.",
+	"version": "2.0.0",
+	"main": "index.js",
+	"files": [
 		"index.js",
 		"tokenize.js",
 		"data"
 	],
-	"keywords":     ["flixbus", "meinfernbus", "fernbus", "bus", "stations"],
-	"author":       "Jannis R <mail@jannisr.de>",
-	"homepage":     "https://github.com/derhuerst/search-meinfernbus-locations",
-	"repository":   "derhuerst/search-meinfernbus-locations",
-	"bugs":         "https://github.com/derhuerst/search-meinfernbus-locations/issues",
-	"license":      "ISC",
-	"engines":      {"node": ">=4"},
+	"keywords": [
+		"flixbus",
+		"meinfernbus",
+		"fernbus",
+		"bus",
+		"stations"
+	],
+	"author": "Jannis R <mail@jannisr.de>",
+	"contributors": [
+		"Julius Tens <mail@juliustens.eu>"
+	],
+	"homepage": "https://github.com/derhuerst/search-meinfernbus-locations",
+	"repository": "derhuerst/search-meinfernbus-locations",
+	"bugs": "https://github.com/derhuerst/search-meinfernbus-locations/issues",
+	"license": "ISC",
+	"engines": {
+		"node": ">=4"
+	},
 	"dependencies": {
 		"hifo": "^0.7.0",
 		"leven": "^2.1.0",
@@ -22,11 +33,11 @@
 		"slug": "^0.9.1"
 	},
 	"devDependencies": {
+		"is-roughly-equal": "^0.1.0",
+		"meinfernbus": "^3.0.0",
 		"so": "^1.0.1",
-		"meinfernbus": "derhuerst/meinfernbus",
-		"tape": "^4.6",
 		"tap-min": "^1.2.1",
-		"is-roughly-equal": "^0.1.0"
+		"tape": "^4.6"
 	},
 	"scripts": {
 		"build": "node build.js",
