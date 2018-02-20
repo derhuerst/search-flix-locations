@@ -34,6 +34,7 @@
 	},
 	"devDependencies": {
 		"is-roughly-equal": "^0.1.0",
+		"lodash.pick": "^4.4.0",
 		"meinfernbus": "^3.0.0",
 		"so": "^1.0.1",
 		"tap-min": "^1.2.1",

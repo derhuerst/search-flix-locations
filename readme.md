@@ -6,10 +6,9 @@
 
 [![npm version](https://img.shields.io/npm/v/search-meinfernbus-locations.svg)](https://www.npmjs.com/package/search-meinfernbus-locations)
 [![build status](https://img.shields.io/travis/derhuerst/search-meinfernbus-locations.svg)](https://travis-ci.org/derhuerst/search-meinfernbus-locations)
-[![dependency status](https://img.shields.io/david/derhuerst/search-meinfernbus-locations.svg)](https://david-dm.org/derhuerst/search-meinfernbus-locations)
-[![dev dependency status](https://img.shields.io/david/dev/derhuerst/search-meinfernbus-locations.svg)](https://david-dm.org/derhuerst/search-meinfernbus-locations#info=devDependencies)
 ![ISC-licensed](https://img.shields.io/github/license/derhuerst/search-meinfernbus-locations.svg)
 [![chat on gitter](https://badges.gitter.im/derhuerst.svg)](https://gitter.im/derhuerst)
+[![support me on Patreon](https://img.shields.io/badge/support%20me-on%20patreon-fa7664.svg)](https://patreon.com/derhuerst)
 
 
 ## Installing
