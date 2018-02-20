@@ -1,6 +1,6 @@
 # *search-meinfernbus-locations*
 
-**Search for [Flixbus](https://flixbus.de/) (Meinfernbus) cities & stations.**
+**Search for [Flixbus/Meinfernbus](https://flixbus.de/) regions & stations.**
 
 [![asciicast](https://asciinema.org/a/83504.png)](https://asciinema.org/a/83504)
 
@@ -37,37 +37,44 @@ console.log(results)
 ```
 
 ```js
-[ {
-	id: 88,
-	type: 'city',
-	name: 'Berlin',
-	relevance: 3.751849742783178
-}, {
-	id: 1224,
-	type: 'station',
-	name: 'Berlin Alexanderplatz',
-	relevance: 1.875924871391589
-}, {
-	id: 481,
-	type: 'station',
-	name: 'Berlin Südkreuz',
-	relevance: 1.875924871391589
-}, {
-	id: 471,
-	type: 'station',
-	name: 'Berlin SXF',
-	relevance: 1.875924871391589
-}, {
-	id: 2825,
-	type: 'station',
-	name: 'Berlin Zoo',
-	relevance: 1.875924871391589
-}, {
-	id: 12468,
-	type: 'station',
-	name: 'Berlin TXL, E',
-	relevance: 1.2506165809277259
-} ]
+[
+    {
+        id: "88",
+        type: "region",
+        name: "Berlin",
+        relevance: 3.706239742783178
+    },
+    {
+        id: "1224",
+        type: "station",
+        name: "Berlin Alexanderplatz",
+        relevance: 1.853119871391589
+    },
+    {
+        id: "481",
+        type: "station",
+        name: "Berlin Südkreuz",
+        relevance: 1.853119871391589
+    },
+    {
+        id: "471",
+        type: "station",
+        name: "Berlin SXF",
+        relevance: 1.853119871391589
+    },
+    {
+        id: "2825",
+        type: "station",
+        name: "Berlin Zoo",
+        relevance: 1.853119871391589
+    },
+    {
+        id: "12468",
+        type: "station",
+        name: "Berlin TXL, E",
+        relevance: 1.2354132475943926
+    }
+]
 ```
 
 If you set `fuzzy` to `true`, words with a [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) `<= 3` will be taken into account. This is a lot slower though.
