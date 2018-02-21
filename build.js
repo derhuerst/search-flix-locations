@@ -29,14 +29,18 @@ const writeFile = (file, data) => new Promise((resolve, reject) => {
 	// todo: map IDs to get smaller data
 	const items = []
 	const regions = Object.create(null) // by ID
+	const namesByOriginalId = Object.create(null)
 
 	for (let r of rawRegions) {
 		if (r.aliases && r.aliases.length > 0) {
 			// todo
 			console.error(`region ${r.id} has aliases, which are not supported`)
 		}
+
+		const id = 'r' + r.id
+		namesByOriginalId[id] = r.name
 		regions[r.id] = {
-			id: 'r' + r.id,
+			id,
 			name: r.name,
 			weight: 0 // will be accumulated to later
 		}
@@ -58,8 +62,10 @@ const writeFile = (file, data) => new Promise((resolve, reject) => {
 			region.weight += weight
 		}
 
+		const id = 's' + s.id
+		namesByOriginalId[id] = s.name
 		items.push({
-			id: 's' + s.id,
+			id,
 			name: s.name,
 			weight,
 			regions: s.regions
@@ -70,7 +76,13 @@ const writeFile = (file, data) => new Promise((resolve, reject) => {
 
 	const {tokens, scores, weights, nrOfTokens, originalIds} = buildIndexes(tokenize, items)
 
+	const names = [] // by internal numeric ID
+	for (let i = 0; i < originalIds.length; i++) {
+		names[i] = namesByOriginalId[originalIds[i]]
+	}
+
 	console.info('Writing the index to disk.')
+	await writeFile('names.json', names)
 	await writeFile('tokens.json', tokens)
 	await writeFile('scores.json', scores)
 	await writeFile('weights.json', weights)
