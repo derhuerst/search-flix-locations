@@ -28,52 +28,46 @@ autocomplete(query, limit = 6, fuzzy = false, completion = true)
 const pick = require('lodash.pick')
 const search = require('search-meinfernbus-locations')
 
-const results = search('berlin').map((r) => {
-	return pick(r, ['id', 'type', 'name', 'relevance'])
-})
-
-console.log(results)
+console.log(search('berlin', 5))
 ```
 
 ```js
-[
-    {
-        id: "88",
-        type: "region",
-        name: "Berlin",
-        relevance: 3.706239742783178
-    },
-    {
-        id: "1224",
-        type: "station",
-        name: "Berlin Alexanderplatz",
-        relevance: 1.853119871391589
-    },
-    {
-        id: "481",
-        type: "station",
-        name: "Berlin Südkreuz",
-        relevance: 1.853119871391589
-    },
-    {
-        id: "471",
-        type: "station",
-        name: "Berlin SXF",
-        relevance: 1.853119871391589
-    },
-    {
-        id: "2825",
-        type: "station",
-        name: "Berlin Zoo",
-        relevance: 1.853119871391589
-    },
-    {
-        id: "12468",
-        type: "station",
-        name: "Berlin TXL, E",
-        relevance: 1.2354132475943926
-    }
-]
+[ {
+    id: '88',
+    name: 'Berlin',
+    type: 'region',
+    relevance: 3.455855112783178,
+    score: 27.984681385568972,
+    weight: 531
+}, {
+    id: '1224',
+    name: 'Berlin Alexanderplatz',
+    type: 'station',
+    relevance: 1.727927556391589,
+    score: 7.743542752920189,
+    weight: 90
+}, {
+    id: '481',
+    name: 'Berlin Südkreuz',
+    type: 'station',
+    relevance: 1.727927556391589,
+    score: 7.445414138704126,
+    weight: 80
+}, {
+    id: '471',
+    name: 'Berlin SXF',
+    type: 'station',
+    relevance: 1.727927556391589,
+    score: 7.121282437290776,
+    weight: 70
+}, {
+    id: '2825',
+    name: 'Berlin Zoo',
+    type: 'station',
+    relevance: 1.727927556391589,
+    score: 5.369072671153364,
+    weight: 30
+} ]
 ```
 
 If you set `fuzzy` to `true`, words with a [Levenshtein distance](https://en.wikipedia.org/wiki/Levenshtein_distance) `<= 3` will be taken into account. This is a lot slower though.
