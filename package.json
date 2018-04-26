@@ -31,7 +31,7 @@
 		"leven": "^2.1.0",
 		"lodash.maxby": "^4.6.0",
 		"slug": "^0.9.1",
-		"synchronous-autocomplete": "^2.1.1"
+		"synchronous-autocomplete": "^2.1.3"
 	},
 	"devDependencies": {
 		"is-roughly-equal": "^0.1.0",
