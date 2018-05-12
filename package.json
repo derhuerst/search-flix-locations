@@ -38,6 +38,7 @@
 		"synchronous-autocomplete": "^2.1.1"
 	},
 	"devDependencies": {
+		"cli-autocomplete": "^0.4.1",
 		"flix": "^4.0.1",
 		"is-roughly-equal": "^0.1.0",
 		"lodash.pick": "^4.4.0",
