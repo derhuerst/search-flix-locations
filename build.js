@@ -3,7 +3,7 @@
 const path = require('path')
 const fs = require('fs')
 const buildIndexes = require('synchronous-autocomplete/build')
-const api = require('meinfernbus')
+const api = require('flix')
 
 const tokenize = require('./tokenize')
 
@@ -20,7 +20,7 @@ const writeFile = (file, data) => new Promise((resolve, reject) => {
 })
 
 ;(async () => {
-	console.info('Fetching data from their API.')
+	console.info('Fetching data from the Flix API.')
 	const rawRegions = await api.regions()
 	const rawStations = await api.stations()
 
