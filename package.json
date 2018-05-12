@@ -1,6 +1,6 @@
 {
-	"name": "search-meinfernbus-locations",
-	"description": "Search for Flixbus MeinFernbus cities & stations.",
+	"name": "search-flix-locations",
+	"description": "Search for Flix/Flixbus/MeinFernbus cities & stations.",
 	"version": "2.2.1",
 	"main": "index.js",
 	"files": [
@@ -9,19 +9,23 @@
 		"data"
 	],
 	"keywords": [
+		"flix",
 		"flixbus",
 		"meinfernbus",
 		"fernbus",
 		"bus",
+		"coach",
+		"flixtrain",
+		"train",
 		"stations"
 	],
 	"author": "Jannis R <mail@jannisr.de>",
 	"contributors": [
 		"Julius Tens <mail@juliustens.eu>"
 	],
-	"homepage": "https://github.com/derhuerst/search-meinfernbus-locations",
-	"repository": "derhuerst/search-meinfernbus-locations",
-	"bugs": "https://github.com/derhuerst/search-meinfernbus-locations/issues",
+	"homepage": "https://github.com/derhuerst/search-flix-locations",
+	"repository": "derhuerst/search-flix-locations",
+	"bugs": "https://github.com/derhuerst/search-flix-locations/issues",
 	"license": "ISC",
 	"engines": {
 		"node": ">=4"

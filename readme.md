@@ -1,12 +1,12 @@
-# *search-meinfernbus-locations*
+# *search-flix-locations*
 
-**Search for [Flixbus/Meinfernbus](https://flixbus.de/) regions & stations.**
+**Search for [Flix/Flixbus/Meinfernbus](https://flixbus.de/) regions & stations.**
 
 [![asciicast](https://asciinema.org/a/83504.png)](https://asciinema.org/a/83504)
 
-[![npm version](https://img.shields.io/npm/v/search-meinfernbus-locations.svg)](https://www.npmjs.com/package/search-meinfernbus-locations)
-[![build status](https://img.shields.io/travis/derhuerst/search-meinfernbus-locations.svg)](https://travis-ci.org/derhuerst/search-meinfernbus-locations)
-![ISC-licensed](https://img.shields.io/github/license/derhuerst/search-meinfernbus-locations.svg)
+[![npm version](https://img.shields.io/npm/v/search-flix-locations.svg)](https://www.npmjs.com/package/search-flix-locations)
+[![build status](https://img.shields.io/travis/derhuerst/search-flix-locations.svg)](https://travis-ci.org/derhuerst/search-flix-locations)
+![ISC-licensed](https://img.shields.io/github/license/derhuerst/search-flix-locations.svg)
 [![chat on gitter](https://badges.gitter.im/derhuerst.svg)](https://gitter.im/derhuerst)
 [![support me on Patreon](https://img.shields.io/badge/support%20me-on%20patreon-fa7664.svg)](https://patreon.com/derhuerst)
 
@@ -14,7 +14,7 @@
 ## Installing
 
 ```shell
-npm install search-meinfernbus-locations
+npm install search-flix-locations
 ```
 
 
@@ -26,7 +26,7 @@ autocomplete(query, limit = 6, fuzzy = false, completion = true)
 
 ```js
 const pick = require('lodash.pick')
-const search = require('search-meinfernbus-locations')
+const search = require('search-flix-locations')
 
 console.log(search('berlin', 5))
 ```
@@ -75,4 +75,4 @@ If you set `fuzzy` to `true`, words with a [Levenshtein distance](https://en.wik
 
 ## Contributing
 
-If you **have a question**, **found a bug** or want to **propose a feature**, have a look at [the issues page](https://github.com/derhuerst/search-meinfernbus-locations/issues).
+If you **have a question**, **found a bug** or want to **propose a feature**, have a look at [the issues page](https://github.com/derhuerst/search-flix-locations/issues).

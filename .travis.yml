@@ -8,7 +8,7 @@ script:
   - npm test
 before_deploy:
   - ls -lh data/*.json
-  - npm version --no-git-tag-version --force $(npx semver -i minor $(npm info search-meinfernbus-locations version))
+  - npm version --no-git-tag-version --force $(npx semver -i minor $(npm info search-flix-locations version))
 deploy:
   provider: npm
   on:
