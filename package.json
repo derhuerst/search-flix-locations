@@ -39,7 +39,7 @@
 	},
 	"devDependencies": {
 		"cli-autocomplete": "^0.4.1",
-		"flix": "^4.0.1",
+		"flix": "^5.0.0",
 		"is-roughly-equal": "^0.1.0",
 		"lodash.pick": "^4.4.0",
 		"so": "^1.0.1",
