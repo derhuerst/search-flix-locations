@@ -1,7 +1,7 @@
 {
 	"name": "search-flix-locations",
 	"description": "Search for Flix/Flixbus/MeinFernbus cities & stations.",
-	"version": "2.2.1",
+	"version": "2.23.1",
 	"main": "index.js",
 	"files": [
 		"index.js",
@@ -38,11 +38,12 @@
 	},
 	"devDependencies": {
 		"cli-autocomplete": "^0.4.1",
-		"flix": "^4.0.1",
+		"flix": "^5.0.1",
+		"get-stream": "^5.1.0",
 		"is-roughly-equal": "^0.1.0",
 		"lodash.pick": "^4.4.0",
 		"so": "^1.0.1",
-		"tap-min": "^1.2.1",
+		"tap-min": "^2.0.0",
 		"tape": "^4.6"
 	},
 	"scripts": {
