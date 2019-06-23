@@ -2,7 +2,7 @@
 
 **Search for [Flix/Flixbus/Meinfernbus](https://flixbus.de/) regions & stations.**
 
-[![asciicast](https://asciinema.org/a/83504.png)](https://asciinema.org/a/83504)
+[![asciicast](https://asciinema.org/a/181177.png)](https://asciinema.org/a/181177)
 
 [![npm version](https://img.shields.io/npm/v/search-flix-locations.svg)](https://www.npmjs.com/package/search-flix-locations)
 [![build status](https://img.shields.io/travis/derhuerst/search-flix-locations.svg)](https://travis-ci.org/derhuerst/search-flix-locations)

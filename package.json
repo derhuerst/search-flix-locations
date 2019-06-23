@@ -32,7 +32,6 @@
 	},
 	"dependencies": {
 		"hifo": "^1.0.0",
-		"leven": "^2.1.0",
 		"lodash.maxby": "^4.6.0",
 		"slug": "^1.0.0",
 		"synchronous-autocomplete": "^2.1.1"
