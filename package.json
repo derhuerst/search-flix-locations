@@ -33,7 +33,7 @@
 	"dependencies": {
 		"hifo": "^1.0.0",
 		"lodash.maxby": "^4.6.0",
-		"slug": "^1.0.0",
+		"slug": "^2.1.0",
 		"synchronous-autocomplete": "^2.1.1"
 	},
 	"devDependencies": {
