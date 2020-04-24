@@ -44,7 +44,7 @@
 		"lodash.pick": "^4.4.0",
 		"so": "^1.0.1",
 		"tap-min": "^2.0.0",
-		"tape": "^4.6"
+		"tape": "^5.0.0"
 	},
 	"scripts": {
 		"build": "node build.js",
