@@ -1,53 +1,57 @@
 {
-	"name": "search-flix-locations",
-	"description": "Search for Flix/Flixbus/MeinFernbus cities & stations.",
-	"version": "2.23.1",
-	"main": "index.js",
-	"files": [
-		"index.js",
-		"tokenize.js",
-		"data"
-	],
-	"keywords": [
-		"flix",
-		"flixbus",
-		"meinfernbus",
-		"fernbus",
-		"bus",
-		"coach",
-		"flixtrain",
-		"train",
-		"stations"
-	],
-	"author": "Jannis R <mail@jannisr.de>",
-	"contributors": [
-		"Julius Tens <mail@juliustens.eu>"
-	],
-	"homepage": "https://github.com/derhuerst/search-flix-locations",
-	"repository": "derhuerst/search-flix-locations",
-	"bugs": "https://github.com/derhuerst/search-flix-locations/issues",
-	"license": "ISC",
-	"engines": {
-		"node": ">=4"
-	},
-	"dependencies": {
-		"hifo": "^1.0.0",
-		"lodash.maxby": "^4.6.0",
-		"slug": "^1.0.0",
-		"synchronous-autocomplete": "^2.1.1"
-	},
-	"devDependencies": {
-		"cli-autocomplete": "^0.4.1",
-		"flix": "^5.0.1",
-		"get-stream": "^5.1.0",
-		"is-roughly-equal": "^0.1.0",
-		"lodash.pick": "^4.4.0",
-		"so": "^1.0.1",
-		"tap-min": "^2.0.0",
-		"tape": "^5.0.0"
-	},
-	"scripts": {
-		"build": "node build.js",
-		"prepublishOnly": "npm run build"
-	}
+  "name": "search-flix-locations",
+  "description": "Search for Flix/Flixbus/MeinFernbus cities & stations.",
+  "version": "2.23.1",
+  "main": "index.js",
+  "files": [
+    "index.js",
+    "tokenize.js",
+    "data"
+  ],
+  "keywords": [
+    "flix",
+    "flixbus",
+    "meinfernbus",
+    "fernbus",
+    "bus",
+    "coach",
+    "flixtrain",
+    "train",
+    "stations"
+  ],
+  "author": "Jannis R <mail@jannisr.de>",
+  "contributors": [
+    "Julius Tens <mail@juliustens.eu>"
+  ],
+  "homepage": "https://github.com/derhuerst/search-flix-locations",
+  "repository": "derhuerst/search-flix-locations",
+  "bugs": "https://github.com/derhuerst/search-flix-locations/issues",
+  "license": "ISC",
+  "engines": {
+    "node": ">=4"
+  },
+  "dependencies": {
+    "hifo": "^1.0.0",
+    "lodash.maxby": "^4.6.0",
+    "slug": "^1.0.0",
+    "synchronous-autocomplete": "^2.1.1",
+    "snyk": "^1.320.2"
+  },
+  "devDependencies": {
+    "cli-autocomplete": "^0.4.1",
+    "flix": "^5.0.1",
+    "get-stream": "^5.1.0",
+    "is-roughly-equal": "^0.1.0",
+    "lodash.pick": "^4.4.0",
+    "so": "^1.0.1",
+    "tap-min": "^2.0.0",
+    "tape": "^5.0.0"
+  },
+  "scripts": {
+    "build": "node build.js",
+    "prepublishOnly": "npm run build",
+    "snyk-protect": "snyk protect",
+    "prepublish": "npm run snyk-protect"
+  },
+  "snyk": true
 }
